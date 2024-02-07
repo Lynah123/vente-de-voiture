@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste Marque{% endblock %}
+
+{% block body %}
+<section class="brand">
+    <div class="container">
+        <h1 class="mb-4">Liste de Marques</h1>
+        <a href="{{ path('app_brand_new') }}" class="btn btn-primary px-4 mb-4">Nouveau Marque</a>
+
+        <div class="brand-table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Identification</th>
+                        <th>Marques</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for brand in brands %}
+                    <tr>
+                        <td>{{ brand.id }}</td>
+                        <td>{{ brand.title }}</td>
+                        <td>
+                            <a href="{{ path('app_brand_show', {'id': brand.id}) }}" class="btn btn-secondary">Voir</a>
+                            <a href="{{ path('app_brand_edit', {'id': brand.id}) }}" class="btn btn-secondary">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    
+
+{% endblock %}

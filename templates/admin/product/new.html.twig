@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}New Product{% endblock %}
+
+{% block body %}
+<section class="new-product">
+    <div class="container">
+        <h1 class="mb-4">Création de nouveau Produit</h1>
+        {{ include('admin/product/_form.html.twig') }}
+    </div>
+</section>
+
+{% endblock %}

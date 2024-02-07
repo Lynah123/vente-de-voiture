@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Nouveau Type{% endblock %}
+
+{% block body %}
+<section class="new-type">
+    <div class="container">
+        <h1>Création d'un nouveau Type</h1>
+    
+        {{ include('admin/type/_form.html.twig') }}
+
+    </div>
+</section>
+
+{% endblock %}

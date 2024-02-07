@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste categorie{% endblock %}
+
+{% block body %}
+<section class="category" id="category">
+    <div class="container">
+        <h1 class="mb-4">Liste de Genres</h1>
+        <a href="{{ path('app_category_new') }}" class="btn btn-primary px-4 mb-4">Nouveau Genre</a>
+        <div class="category-table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Identification</th>
+                        <th>Genres</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.title }}</td>
+                        <td>
+                            <a class="btn btn-secondary" href="{{ path('app_category_show', {'id': category.id}) }}">Voir</a>
+                            <a class="btn btn-secondary" href="{{ path('app_category_edit', {'id': category.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
