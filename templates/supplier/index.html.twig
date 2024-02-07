@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste Fournisseurs{% endblock %}
+
+{% block body %}
+<section class="supplier">
+    <div class="container">
+        <h1 class="mb-4">Liste de Fournisseurs</h1>
+        <a href="{{ path('app_supplier_new') }}" class="btn btn-primary px-4 mb-4">Nouveau Fournisseur</a>
+        <div class="supplier-table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom de Fournisseur</th>
+                        <th>Adresse</th>
+                        <th>Numéro Téléphone</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for supplier in suppliers %}
+                    <tr>
+                        <td>{{ supplier.id }}</td>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.address }}</td>
+                        <td>{{ supplier.phoneNumber }}</td>
+                        <td>
+                            <a href="{{ path('app_supplier_show', {'id': supplier.id}) }}" class="btn btn-secondary">Voir</a>
+                            <a href="{{ path('app_supplier_edit', {'id': supplier.id}) }}" class="btn btn-secondary">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <section class="register" id="register">
+        <div class="container">
+                <div class="card rounded-3 shadow px-5 py-5">
+                    <div class="card-body">
+                    <div class="text-center">
+                        <h4 class="mt-1 mb-5 pb-1">Inscrivez-vous</h4>
+                    </div>
+    
+                    <div>
+                        {{form_start(form)}}
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+                                <div class="form-group mb-3">
+                                    <label for="" class="mb-2">Nom de famille</label>
+                                    <span class="text-danger "> {{form_errors(form.firstName)}} </span>
+                                    {{form_widget(form.firstName)}}
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+                                <div class="form-group mb-3">
+                                    <label for="" class="mb-2">Prénom(s)</label>
+                                    <span class="text-danger "> {{form_errors(form.lastName)}} </span>
+                                    {{form_widget(form.lastName)}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-4">
+                                <div class="form-group mb-3">
+                                    <label for="" class="mb-2">Adresse e-mail</label>
+                                    <span class="text-danger "> {{form_errors(form.email)}} </span>
+                                    {{form_widget(form.email)}}
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-4">
+                                <div class="form-group mb-3">
+                                    <label for="" class="mb-2">Adresse exacte</label>
+                                    <span class="text-danger "> {{form_errors(form.address)}} </span>
+                                    {{form_widget(form.address)}}
+                                </div>
+                            </div>
+                           
+                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-4">
+                                <div class="form-group mb-3">
+                                    <label for="" class="mb-2">Numéro de téléphone</label>
+                                    <span class="text-danger "> {{form_errors(form.phoneNumber)}} </span>
+                                    {{form_widget(form.phoneNumber)}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+                                <div class="form-group mb-3">
+                                    <label for="" class="mb-2">Mot de passe</label>
+                                    <span class="text-danger "> {{form_errors(form.password)}} </span>
+                                    {{form_widget(form.password)}}
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+                                <div class="form-group mb-3">
+                                    <label for="" class="mb-2">Confirmation mot de passe</label>
+                                    <span class="text-danger "> {{form_errors(form.passwordConfirm)}} </span>
+                                    {{form_widget(form.passwordConfirm)}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-3 mt-4 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary px-5">Enregistrer</button>
+                        </div>
+                        {{form_end(form)}}
+                    </div>
+    
+    
+                    </div>
+                </div>
+          </div>
+    </section>
+{% endblock %}

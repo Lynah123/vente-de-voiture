@@ -1,0 +1,103 @@
+@font-face {
+    font-family: 'MaPolice';
+    src: url('../plugins/font-family/DancingScript-VariableFont_wght.ttf') format('truetype');
+         /*url('../fonts/ma-police.woff') format('woff');*/
+    font-weight: normal;
+    font-style: normal;
+}
+
+.navbar {
+    background-color: #222831 !important;
+}
+
+.home {
+    background-image: url('../images/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 70vh;
+    background-position: center;
+    color: #fff;
+    padding-top: 100px;
+}
+
+.big-title {
+    font-size: 55px;
+    font-family: 'MaPolice';
+}
+
+.title {
+    letter-spacing: 2px;
+}
+
+.paragraphe {
+    line-height: 2;
+}
+
+.register {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.btn-primary {
+    background-color: #970413 !important;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #b02a37 !important;
+    border: none;
+}
+
+.btn-outline-primary {
+    border: 1px solid #970413;
+}
+
+.btn-outline-primary:hover {
+    background-color: #970413;
+
+    border: none;
+}
+
+.register .card {
+    background-color: #222831;
+    color: #fff;
+}
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #56a8f5;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #2c3e50, #1c2b38, #17212b, #1c2b38);
+
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right,  #2c3e50, #1c2b38, #17212b, #1c2b38);
+    }
+
+    .header {
+        position: relative;
+        z-index: -1;
+    }
+
+    .sidebar {
+        background-color: #970413 !important;
+    }
+
+    .menu-left {
+        z-index: 2;
+    }
+
+    .product , .new-product, .new-category, .type, .new-type, .supplier, .new-supplier, .supplier-show
+    , .brand {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .btn-register {
+        margin-right: 20px;
+    }
+
+    .new-product label, .new-category label, .new-type label, .new-supplier label {
+        margin-bottom: 10px;
+    }

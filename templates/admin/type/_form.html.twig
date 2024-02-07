@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary px-4 mt-4">{{ button_label|default('Enregistrer') }}</button>
+    <a href="{{ path('app_type_index') }}" class="btn btn-secondary px-4 mt-4">Retour à la liste</a>
+
+{{ form_end(form) }}
