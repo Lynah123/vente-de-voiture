@@ -15,60 +15,63 @@ $(document).ready(function(){
     );
 });
 
-//collectiontype
+//datatable
 
-$("#add-type").click(function() {
-    const index = +$('#widgets-counter').val();
-
-    const tmpl = $('#brand_types').data('prototype').replace(/__name__/g, index);
-    
-    $('#brand_types').append(tmpl);
-
-    $('#widgets-counter').val(index + 1);
-
-    handleDeleteType();
-});
-
-function handleDeleteType(){
-    $('button[data-action="delete-type"]').click(function() {
-        const target = this.dataset.target;
-        $(target).remove();
+$(document).ready(function() {
+    $('#table-product').DataTable({
+      responsive: true,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+    },
+      border: false,
+      scrollX: '100%',
+      pageLength: 10,
+      scrollCollapse: false,
     });
-}
-
-function updateCounterType() {
-    const count = +$('#brand_types div.form-group').length;
-
-    $('#widgets-counter').val(count);
-}
-
-updateCounterType();
-handleDeleteType();
-
-$("#add-category").click(function() {
-    const index = +$('#widgets-counter').val();
-
-    const tmpl = $('#brand_categories').data('prototype').replace(/__name__/g, index);
-    
-    $('#brand_categories').append(tmpl);
-
-    $('#widgets-counter').val(index + 1);
-
-    handleDeleteCategory();
-});
-
-function handleDeleteCategory(){
-    $('button[data-action="delete-category"]').click(function() {
-        const target = this.dataset.target;
-        $(target).remove();
+  
+    $('#type-table').DataTable({
+      responsive: true,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+    },
+      border: false,
+      scrollX: '100%',
+      pageLength: 10,
+      scrollCollapse: false,
     });
-}
 
-function updateCounterCategory() {
-    const count = +$('#brand_categories div.form-group').length;
+    $('#table-category').DataTable({
+      responsive: true,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+    },
+      border: false,
+      scrollX: '100%',
+      pageLength: 10,
+      scrollCollapse: false,
+    });
 
-    $('#widgets-counter').val(count);
-}
+    $('#table-category').DataTable({
+      responsive: true,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+    },
+      border: false,
+      scrollX: '100%',
+      pageLength: 10,
+      scrollCollapse: false,
+    });
 
-updateCounterCategory();
-handleDeleteCategory();
+    $('#table-supllier').DataTable({
+      responsive: true,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json',
+    },
+      border: false,
+      scrollX: '100%',
+      pageLength: 10,
+      scrollCollapse: false,
+    });
+    
+    
+  });

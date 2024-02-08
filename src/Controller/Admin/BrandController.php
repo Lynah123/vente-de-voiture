@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/brand")
+ * @Route("/admin/brand")
  */
 class BrandController extends AbstractController
 {
@@ -36,17 +36,15 @@ class BrandController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach($brand->getTypes() as $type) {
-                $type->setBrand($brand);
-                $em->persist($type);
-            }
-
-            foreach($brand->getCategories() as $cat) {
-                $cat->addBrand($brand);
-                $em->persist($cat);
-            }
-
             $brandRepository->add($brand, true);
+
+            $message = "Le marque a bien été enregistré, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
             return $this->redirectToRoute('app_brand_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -68,7 +66,7 @@ class BrandController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_brand_edit", methods={"GET", "POST"})
+     * @Route("/edit/{id}", name="app_brand_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Brand $brand, BrandRepository $brandRepository): Response
     {
@@ -77,6 +75,14 @@ class BrandController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $brandRepository->add($brand, true);
+
+            $message = "Le marque a bien été modifié, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
             return $this->redirectToRoute('app_brand_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -95,6 +101,14 @@ class BrandController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$brand->getId(), $request->request->get('_token'))) {
             $brandRepository->remove($brand, true);
         }
+
+        $message = "Le marque a bien été supprimé, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
         return $this->redirectToRoute('app_brand_index', [], Response::HTTP_SEE_OTHER);
     }

@@ -25,13 +25,14 @@ class Category
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Brand::class, mappedBy="categories")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
      */
-    private $brands;
+    private $products;
 
     public function __construct()
     {
         $this->brands = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
 
@@ -52,28 +53,32 @@ class Category
         return $this;
     }
 
+   
     /**
-     * @return Collection<int, Brand>
+     * @return Collection<int, Product>
      */
-    public function getBrands(): Collection
+    public function getProducts(): Collection
     {
-        return $this->brands;
+        return $this->products;
     }
 
-    public function addBrand(Brand $brand): self
+    public function addProduct(Product $product): self
     {
-        if (!$this->brands->contains($brand)) {
-            $this->brands[] = $brand;
-            $brand->addCategory($this);
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeBrand(Brand $brand): self
+    public function removeProduct(Product $product): self
     {
-        if ($this->brands->removeElement($brand)) {
-            $brand->removeCategory($this);
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
+            }
         }
 
         return $this;

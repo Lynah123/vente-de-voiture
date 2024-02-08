@@ -34,40 +34,6 @@ class BrandType extends AbstractType
                 'label' => 'Fournisseur'
             ])
 
-            ->add('types', CollectionType::class, [
-                'entry_type' => EntityType::class,
-                'entry_options' => [
-                    'class' => Type::class,
-                    'choice_label' => function(Type $type) {
-                        return $type->getTitle();
-                    }
-                    
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'attr' => [
-                    'class' => 'mb-3'
-                ]
-                
-            ])
-
-            ->add('categories', CollectionType::class, [
-                'entry_type' => EntityType::class,
-                'entry_options' => [
-                    'class' => Category::class,
-                    'choice_label' => function(Category $cat) {
-                        return $cat->getTitle();
-                    }
-                    
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'attr' => [
-                    'class' => 'mb-3'
-                ]
-                
-            ])
-           
         ;
     }
 

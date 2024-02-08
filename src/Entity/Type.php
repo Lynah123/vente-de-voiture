@@ -25,9 +25,14 @@ class Type
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="types")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="type")
      */
-    private $brand;
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -47,14 +52,32 @@ class Type
         return $this;
     }
 
-    public function getBrand(): ?Brand
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
     {
-        return $this->brand;
+        return $this->products;
     }
 
-    public function setBrand(?Brand $brand): self
+    public function addProduct(Product $product): self
     {
-        $this->brand = $brand;
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getType() === $this) {
+                $product->setType(null);
+            }
+        }
 
         return $this;
     }
