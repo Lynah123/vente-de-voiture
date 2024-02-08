@@ -1,42 +1,57 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block title %}Produit{% endblock %}
 
 {% block body %}
-    <h1>Product</h1>
+<section class="product-show">
+    <div class="container">
+        <h1>Produit</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ product.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ product.quantity }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ product.type }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_product_index') }}">back to list</a>
-
-    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-
-    {{ include('product/_delete_form.html.twig') }}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Identification</th>
+                    <td>{{ product.id }}</td>
+                </tr>
+                <tr>
+                    <th>Titre</th>
+                    <td>{{ product.title }}</td>
+                </tr>
+                <tr>
+                    <th>Marque</th>
+                    <td>{{ product.brand.title }}</td>
+                </tr>
+                <tr>
+                    <th>Genre</th>
+                    <td>{{ product.category.title }}</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ product.type.title }}</td>
+                </tr>
+                <tr>
+                    <th>Quantité(s)</th>
+                    <td>{{ product.quantity }}</td>
+                </tr>
+                
+                <tr>
+                    <th>Prix</th>
+                    <td>{{ product.price }} €</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ product.description }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-warning btn-register px-4">Modifier</a>
+    
+        <a href="{{ path('app_product_index') }}" class="btn btn-secondary px-4">Retour à la liste</a>
+    
+    
+        {{ include('admin/product/_delete_form.html.twig') }}
+    </div>
+</section>
+    
 {% endblock %}

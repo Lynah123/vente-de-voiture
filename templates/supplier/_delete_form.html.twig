@@ -1,4 +1,0 @@
-<form class="mt-4" method="post" action="{{ path('app_supplier_delete', {'id': supplier.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cet élément?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ supplier.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
-</form>

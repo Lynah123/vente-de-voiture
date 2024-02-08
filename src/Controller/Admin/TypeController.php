@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/type")
+ * @Route("/admin/type")
  */
 class TypeController extends AbstractController
 {
@@ -36,6 +36,14 @@ class TypeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $typeRepository->add($type, true);
+
+            $message = "Le type a bien été enregistré, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
             return $this->redirectToRoute('app_type_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,6 +75,14 @@ class TypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $typeRepository->add($type, true);
 
+            $message = "Le type a bien été modifié, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
+
             return $this->redirectToRoute('app_type_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -84,6 +100,14 @@ class TypeController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$type->getId(), $request->request->get('_token'))) {
             $typeRepository->remove($type, true);
         }
+
+        $message = "Le type a bien été supprimé, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
         return $this->redirectToRoute('app_type_index', [], Response::HTTP_SEE_OTHER);
     }

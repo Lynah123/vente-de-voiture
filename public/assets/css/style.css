@@ -89,7 +89,8 @@
     }
 
     .product , .new-product, .new-category, .type, .new-type, .supplier, .new-supplier, .supplier-show
-    , .brand {
+    , .brand, .brand-edit, .brand-show, .product-show, .product-edit, .type-edit,
+    .category, .category-show, .stock-list {
         margin-top: 50px;
         margin-bottom: 50px;
     }
@@ -100,4 +101,14 @@
 
     .new-product label, .new-category label, .new-type label, .new-supplier label {
         margin-bottom: 10px;
+    }
+
+    .vich-image img {
+        width: 100px;
+        height: 100px;
+    }
+
+
+    .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>td, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>td {
+        border-bottom: none;
     }

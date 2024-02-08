@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary btn-register px-4">{{ button_label|default('Enregistrer') }}</button>
+    <a href="{{ path('app_stock_index', {'id' : product.id}) }}" class="btn btn-secondary">Retour à la liste</a>
+
+{{ form_end(form) }}

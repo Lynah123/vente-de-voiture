@@ -5,10 +5,15 @@
 {% block body %}
 <section class="category" id="category">
     <div class="container">
+    {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+              {{message}}
+          </div>
+      {% endfor %}
         <h1 class="mb-4">Liste de Genres</h1>
         <a href="{{ path('app_category_new') }}" class="btn btn-primary px-4 mb-4">Nouveau Genre</a>
         <div class="category-table">
-            <table class="table table-striped">
+            <table class="table table-striped" id="table-category" style="width: 100%;">
                 <thead>
                     <tr>
                         <th>Identification</th>

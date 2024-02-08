@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/supplier")
+ * @Route("/admin/supplier")
  */
 class SupplierController extends AbstractController
 {
@@ -36,6 +36,14 @@ class SupplierController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $supplierRepository->add($supplier, true);
+
+            $message = "Le fournisseur a bien été enregistré, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
             return $this->redirectToRoute('app_supplier_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,6 +75,14 @@ class SupplierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $supplierRepository->add($supplier, true);
 
+            $message = "Le fournisseur a bien été modifier, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
+
             return $this->redirectToRoute('app_supplier_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -84,6 +100,14 @@ class SupplierController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$supplier->getId(), $request->request->get('_token'))) {
             $supplierRepository->remove($supplier, true);
         }
+
+        $message = "Le fournisseur a bien été supprimé, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
         return $this->redirectToRoute('app_supplier_index', [], Response::HTTP_SEE_OTHER);
     }

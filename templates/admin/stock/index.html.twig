@@ -1,0 +1,60 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste de stock{% endblock %}
+
+{% block body %}
+<section class="stock-list">
+    <div class="container">
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+              {{message}}
+          </div>
+      {% endfor %}
+      <div class="row">
+        <div class="col-xl-8 col-lg-7 col-md-12 col-sm-12">
+            <h1>Liste de stock pour {{product.title}} </h1>
+            <a href="{{ path('app_stock_new', {'id' : product.id}) }}" class="btn btn-primary px-4 mb-4">Nouveau Stock</a>
+        </div>
+        <div class="col-xl-4 col-lg-5 col-md-12 col-sm-12">
+            {% set total = 0 %}
+            {% for stock in stocks %}
+              {% set total = total + stock.quantity %}
+            {% endfor %}
+            <div class="total">
+                <p>Total Quantité : {{total}} </p>
+                <p>Reste : {{product.quantity}} </p>
+            </div>
+        </div>
+      </div>
+        <div class="stock-table">
+            <table class="table table-striped" id="table-stock">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Date de création</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for stock in stocks %}
+                    <tr>
+                        <td>{{ stock.id }}</td>
+                        <td> {{stock.product.title}} </td>
+                        <td>{{ stock.quantity }}</td>
+                        <td>{{ stock.createdAt ? stock.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+    
+
+{% endblock %}

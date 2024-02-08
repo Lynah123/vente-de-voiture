@@ -5,15 +5,21 @@
 {% block body %}
 <section class="brand">
     <div class="container">
+    {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+              {{message}}
+          </div>
+      {% endfor %}
         <h1 class="mb-4">Liste de Marques</h1>
         <a href="{{ path('app_brand_new') }}" class="btn btn-primary px-4 mb-4">Nouveau Marque</a>
 
         <div class="brand-table">
-            <table class="table table-striped">
+            <table class="table table-striped" id="table-category" style="width: 100%;">
                 <thead>
                     <tr>
                         <th>Identification</th>
                         <th>Marques</th>
+                        <th>Fournisseurs</th>
                         <th>actions</th>
                     </tr>
                 </thead>
@@ -22,6 +28,7 @@
                     <tr>
                         <td>{{ brand.id }}</td>
                         <td>{{ brand.title }}</td>
+                        <td> {{brand.supplier.name}} </td>
                         <td>
                             <a href="{{ path('app_brand_show', {'id': brand.id}) }}" class="btn btn-secondary">Voir</a>
                             <a href="{{ path('app_brand_edit', {'id': brand.id}) }}" class="btn btn-secondary">Modifier</a>

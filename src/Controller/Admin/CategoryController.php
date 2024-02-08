@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/category")
+ * @Route("/admin/category")
  */
 class CategoryController extends AbstractController
 {
@@ -36,6 +36,14 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
+
+            $message = "Le genre a bien été enregistré, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,6 +75,14 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
 
+            $message = "Le genre a bien été modifié, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
+
             return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -84,6 +100,14 @@ class CategoryController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }
+
+        $message = "Le genre a bien été supprimé, merci pour votre confiance";
+
+            $this->addFlash(
+                'success',
+                $message
+            );
+
 
         return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
     }

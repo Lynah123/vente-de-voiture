@@ -6,9 +6,14 @@ use App\Repository\BrandRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=BrandRepository::class)
+ * @UniqueEntity(
+ *     fields={"title"},
+ *     message="Ce marque a été déjà pris par un autre fournisseur, merci de la modifier!"
+ * )
  */
 class Brand
 {
@@ -31,19 +36,13 @@ class Brand
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Type::class, mappedBy="brand")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="brand")
      */
-    private $types;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="brands")
-     */
-    private $categories;
+    private $products;
 
     public function __construct()
     {
-        $this->types = new ArrayCollection();
-        $this->categories = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
 
@@ -77,55 +76,31 @@ class Brand
     }
 
     /**
-     * @return Collection<int, Type>
+     * @return Collection<int, Product>
      */
-    public function getTypes(): Collection
+    public function getProducts(): Collection
     {
-        return $this->types;
+        return $this->products;
     }
 
-    public function addType(Type $type): self
+    public function addProduct(Product $product): self
     {
-        if (!$this->types->contains($type)) {
-            $this->types[] = $type;
-            $type->setBrand($this);
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setBrand($this);
         }
 
         return $this;
     }
 
-    public function removeType(Type $type): self
+    public function removeProduct(Product $product): self
     {
-        if ($this->types->removeElement($type)) {
+        if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($type->getBrand() === $this) {
-                $type->setBrand(null);
+            if ($product->getBrand() === $this) {
+                $product->setBrand(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        $this->categories->removeElement($category);
 
         return $this;
     }

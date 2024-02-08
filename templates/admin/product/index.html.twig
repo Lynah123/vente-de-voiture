@@ -1,43 +1,53 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}Liste Produit{% endblock %}
 
 {% block body %}
     <section class="product" id="product">
         <div class="container">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{message}}
+                </div>
+            {% endfor %}
             <h1 class="mb-4">Liste de Produits</h1>
             <a href="{{ path('app_product_new') }}" class="btn btn-primary mb-4 px-4">Nouveau Produit</a>
         
             <div class="product-table">
-                <table class="table">
+                <table class="table table-striped" id="table-product">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>Identitfication</th>
                             <th>Titre</th>
-                            <th>Description</th>
-                            <th>Quantité(s)</th>
+                            <th>Marques</th>
                             <th>Types</th>
+                            <th>Genres</th>
+                            <th>Quantité(s)</th>
                             <th>Prix</th>
+                            <th>Description</th>
                             <th>actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for product in products %}
-                        <tr>
+                        <tr class="text-nowrap">
                             <td>{{ product.id }}</td>
                             <td>{{ product.title }}</td>
-                            <td>{{ product.description }}</td>
+                            <td>{{ product.brand.title }}</td>
+                            <td>{{ product.type.title }}</td>
+                            <td>{{ product.category.title }}</td>
                             <td>{{ product.quantity }}</td>
-                            <td>{{ product.type }}</td>
-                            <td>{{ product.price }}</td>
+                            <td>{{ product.price }} €</td>
+                            <td>{{ product.description|slice(0,30) }} ...</td>
                             <td>
-                                <a href="{{ path('app_product_show', {'id': product.id}) }}">Voir</a>
-                                <a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+                                <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-secondary">Voir</a>
+                                <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-secondary">Modifier</a>
+                                <a href="{{ path('app_stock_index', {'id': product.id}) }}" class="btn btn-warning">Stock</a>
                             </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="7">Aucun enregistrement trouvé</td>
+                            <td colspan="9">Aucun enregistrement trouvé</td>
                         </tr>
                     {% endfor %}
                     </tbody>
