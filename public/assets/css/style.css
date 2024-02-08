@@ -112,3 +112,45 @@
     .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>td, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>th, .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>td {
         border-bottom: none;
     }
+
+    .product-img {
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .product-img {
+        height: 300px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .description {
+        text-align: justify;
+    }
+
+    .product-card {
+        border-radius: 30px;
+    }
+
+    .product-home, .cart {
+        margin-top: 100px;
+        margin-bottom: 100px;
+    }
+
+    .icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px; 
+        width: 60px;
+        background-color: #970413;
+        border-radius: 50%;
+        display: flex;
+        float: right;
+    }
+    
+    .fa-shopping-cart {
+        color: #fff;
+        font-size: 24px; 
+    }
+    

@@ -75,6 +75,11 @@ class Product
      */
     private $stocks;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
@@ -223,6 +228,18 @@ class Product
                 $stock->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

@@ -50,10 +50,33 @@
             
         </div>
     </section>
-    <section class="product" id="product">
+    <section class="product-home" id="product-home">
         <div class="container">
+            <h1 class="text-center mb-5 fw-bold">Nos Produits</h1>
             <div class="row">
-                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12"></div>
+                {% for product in products %}
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                    <div class="card product-card shadow">
+                        <div class="product-img">
+                            <img src="{{ asset('uploads/products/' ~ product.image) }}" alt="">
+                        </div>
+                        <div class="product-description p-4">
+                            <h4 class="text-center fw-bold mb-3"> {{product.title}} </h4>
+                            <p class="text-center">Marque : {{product.brand.title}} </p>
+                            <p class="text-center">Genre : {{product.category.title}} </p>
+                            <p class="text-center">Type : {{product.type.title}} </p>
+                            <p class="text-center">Nombre(s) : {{product.quantity}} </p>
+                            <p class="text-center">Prix(unité) : {{product.price}} € </p>
+                            <p class="description"> {{product.description}} </p>
+                            <div class="icons">
+                                <a href="{{path('app_cart_add', {'id' : product.id})}}">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

@@ -47,6 +47,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //$productRepository->add($product, true);
             $date = new \Datetime();
+            $product->setIsActive(1);
 
             $em->persist($product);
             $em->flush();
@@ -129,6 +130,35 @@ class ProductController extends AbstractController
             );
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/update-is-active/{id}", name= "update_is_active")
+     * 
+     */
+    public function updateIsActive(Request $request, Product $product, EntityManagerInterface $em): Response
+    {
+        $productId = $product->getId();
+        
+        if (!$productId) {
+            throw $this->createNotFoundException(
+                'No product found for id '.$productId
+            );
+        }
+
+        $isActive = $product->isIsActive();
+
+        if($isActive == 0) {
+            $product->setIsActive(1);
+            $em->persist($product);
+            $em->flush();
+        } else {
+            $product->setIsActive(0);
+            $em->persist($product);
+            $em->flush();
+        }
+        
+        return $this->redirectToRoute('app_product_index');
     }
 
    
