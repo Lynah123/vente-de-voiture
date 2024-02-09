@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+<section class="commande-list">
+    <div class="container">
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+              {{message}}
+          </div>
+      {% endfor %}
+        <h1 class="mb-5 text-center">Mes commandes</h1>
+        <div class="table-adresse">
+            <table class="table table-striped" id="adresse-table">
+                <thead>
+                    <tr class="text-nowrap">
+                        <th>Identification</th>
+                        <th>Transporteur</th>
+                        <th>Prix de livraison</th>
+                        <th>Adresse de livraison</th>
+                        <th>Produits</th>
+                        <th>Marque</th>
+                        <th>Genres</th>
+                        <th>Types</th>
+                        <th>Quantités</th>
+                        <th>Prix</th>
+                        <th>Total</th>
+                        <th>Grand Total</th>
+                        <th>Date de commande</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr class="text-nowrap">
+                        <td>{{ order.id }}</td>
+                        <td>{{order.carrierName}}</td>
+                        <td> {{order.carrierPrice}} € </td>
+                        <td> {{order.delivery|raw}} </td>
+                        <td>
+                            {% for orderDetail in order.orderDetails %}
+                                {{orderDetail.product}} <br/>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for orderDetail in order.orderDetails %}
+                                {{orderDetail.brand}} <br/>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for orderDetail in order.orderDetails %}
+                                {{orderDetail.category}} <br/>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for orderDetail in order.orderDetails %}
+                                {{orderDetail.type}} <br/>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for orderDetail in order.orderDetails %}
+                                {{orderDetail.quantity}} <br/>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for orderDetail in order.orderDetails %}
+                                {{orderDetail.price}} € <br/>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for orderDetail in order.orderDetails %}
+                                {{orderDetail.total}} € <br/>
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% set GrandTotal = 0 %}
+                            {% for orderDetail in order.orderDetails %}
+                                {% set GrandTotal = GrandTotal + orderDetail.total %}
+                            {% endfor %}
+                           <span class="bg-danger py-1 px-2 text-white">{{GrandTotal + order.carrierPrice}} €</span> 
+                        </td>
+                        <td>{{ order.createdAt|date('d-m-Y à H:s') }}</td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    
+
+{% endblock %}

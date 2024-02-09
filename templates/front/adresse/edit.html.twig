@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification Adresse{% endblock %}
+
+{% block body %}
+<section class="adresse-edit">
+    <div class="container">
+        <h1>Modification Adresse</h1>
+
+        {{ include('front/adresse/_form.html.twig', {'button_label': 'Modifier'}) }}
+    
+    
+    </div>
+</section>
+   
+{% endblock %}

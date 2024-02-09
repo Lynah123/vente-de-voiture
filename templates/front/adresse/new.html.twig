@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau adresse de livraison{% endblock %}
+
+{% block body %}
+<section class="adresse-new">
+    <div class="container">
+        <h1>Nouveau adresse de livraison</h1>
+
+        {{ include('front/adresse/_form.html.twig') }}
+    </div>
+</section>
+    
+
+{% endblock %}

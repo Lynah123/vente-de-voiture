@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -87,6 +89,22 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
      * )
      */
     private $phoneNumber;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Adresse::class, mappedBy="client")
+     */
+    private $adressesDelivery;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="client")
+     */
+    private $orders;
+
+    public function __construct()
+    {
+        $this->adressesDelivery = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -221,6 +239,66 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adresse>
+     */
+    public function getAdressesDelivery(): Collection
+    {
+        return $this->adressesDelivery;
+    }
+
+    public function addAdressesDelivery(Adresse $adressesDelivery): self
+    {
+        if (!$this->adressesDelivery->contains($adressesDelivery)) {
+            $this->adressesDelivery[] = $adressesDelivery;
+            $adressesDelivery->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdressesDelivery(Adresse $adressesDelivery): self
+    {
+        if ($this->adressesDelivery->removeElement($adressesDelivery)) {
+            // set the owning side to null (unless already changed)
+            if ($adressesDelivery->getClient() === $this) {
+                $adressesDelivery->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getClient() === $this) {
+                $order->setClient(null);
+            }
+        }
 
         return $this;
     }

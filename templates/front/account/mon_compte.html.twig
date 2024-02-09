@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte {% endblock %}
+
+{% block body %}
+    <section class="my-account">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2 col-md-12 col-sm-12"></div>
+                <div class="col-xl-6 col-lg-8 col-md-12 col-sm-12">
+                    <div class="card shadow p-5">
+                        <h2 class="text-center mb-5">Mon Compte</h2>
+                        <p>Bienvenue {{client.lastName}} dans votre compte </p>
+                        <p>C'est dans cet espace que vous pouvez gérer toutes vos informations personnels</p>
+                        <div class="row mb-4">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                <a href="">Modifier mon profile</a>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                <a href="">Modifier mon mot de passe</a>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                <a href="{{path('app_my_order')}}">Mes commandes</a>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                <a href="{{path('app_adresse_index')}}">Mes adresses de livraison</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-2 col-md-12 col-sm-12"></div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

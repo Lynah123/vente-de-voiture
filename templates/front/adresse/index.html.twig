@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresse de livraison{% endblock %}
+
+{% block body %}
+<section class="adresse-list">
+    <div class="container">
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+              {{message}}
+          </div>
+      {% endfor %}
+        <h1 class="mb-5 text-center">Mes adresse de livraison</h1>
+        <a href="{{ path('app_adresse_new') }}" class="btn btn-primary px-4 mb-4 mt-4">Nouveau adresse de livraison</a>
+        <div class="table-adresse">
+            <table class="table table-striped" id="adresse-table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Société</th>
+                        <th>Adresse</th>
+                        <th>Code Postal</th>
+                        <th>Ville</th>
+                        <th>Pays</th>
+                        <th>Numéro Téléphone</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for adresse in adresses %}
+                    <tr>
+                        <td>{{ adresse.id }}</td>
+                        <td>{{ adresse.name }}</td>
+                        <td>{{ adresse.company }}</td>
+                        <td>{{ adresse.adress }}</td>
+                        <td>{{ adresse.postal }}</td>
+                        <td>{{ adresse.city }}</td>
+                        <td>{{ adresse.country }}</td>
+                        <td>{{ adresse.phone }}</td>
+                        <td>
+                            <a href="{{ path('app_adresse_show', {'id': adresse.id}) }}" class="btn btn-primary px-4 btn-register">Voir</a>
+                            <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}" class="btn btn-primary px-4">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+    
+
+{% endblock %}

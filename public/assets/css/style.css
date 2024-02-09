@@ -33,7 +33,7 @@
     line-height: 2;
 }
 
-.register {
+.register, .my-account, .adresse-edit, .adresse-show, .adresse-new, .commande-list {
     margin-top: 100px;
     margin-bottom: 100px;
 }
@@ -88,9 +88,7 @@
         z-index: 2;
     }
 
-    .product , .new-product, .new-category, .type, .new-type, .supplier, .new-supplier, .supplier-show
-    , .brand, .brand-edit, .brand-show, .product-show, .product-edit, .type-edit,
-    .category, .category-show, .stock-list {
+    .contenu {
         margin-top: 50px;
         margin-bottom: 50px;
     }
@@ -118,7 +116,7 @@
         overflow: hidden;
     }
 
-    .product-img {
+    .product-img img {
         height: 300px;
         object-fit: cover;
         object-position: center;
@@ -149,7 +147,7 @@
         float: right;
     }
     
-    .fa-shopping-cart {
+    .icons .fa-shopping-cart {
         color: #fff;
         font-size: 24px; 
     }

@@ -47,14 +47,16 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //$productRepository->add($product, true);
             $date = new \Datetime();
-            $product->setIsActive(1);
+            $product->setIsActive(1)
+                    ->setIsOutOfStock(0);
 
             $em->persist($product);
             $em->flush();
 
             $stock->setProduct($product)
                   ->setQuantity($product->getQuantity())
-                  ->setCreatedAt($date);
+                  ->setCreatedAt($date)
+                  ;
                   
             $em->persist($stock);
             $em->flush();

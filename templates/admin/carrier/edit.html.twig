@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification TRansporteu{% endblock %}
+
+{% block body %}
+<section class="carrier-edit">
+    <div class="container">
+        <h1>Edit Carrier</h1>
+        {{ include('admin/carrier/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+</section>
+{% endblock %}
