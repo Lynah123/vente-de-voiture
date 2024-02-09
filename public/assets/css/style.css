@@ -33,7 +33,8 @@
     line-height: 2;
 }
 
-.register, .my-account, .adresse-edit, .adresse-show, .adresse-new, .commande-list {
+.register, .my-account, .adresse-edit, .adresse-show, .adresse-new, .commande-list,
+.product {
     margin-top: 100px;
     margin-bottom: 100px;
 }
