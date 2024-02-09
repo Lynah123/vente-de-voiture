@@ -14,7 +14,7 @@ class HomeController extends AbstractController
      */
     public function index(ProductRepository $productRepo): Response
     {
-        $product = $productRepo->findBy(['isActive' => true]);
+        $product = $productRepo->findBy(['isActive' => true, 'isOutOfStock' => false]);
         return $this->render('front/home/index.html.twig', [
             'products' => $product,
         ]);

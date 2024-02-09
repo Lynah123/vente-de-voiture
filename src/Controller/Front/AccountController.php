@@ -14,10 +14,22 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AccountController extends AbstractController
 {
 
+     /**
+     * @Route("/account", name="app_account")
+     */
+    public function index(Request $request): Response
+    {
+        $client = $this->getUser();
+
+        return $this->render('front/account/mon_compte.html.twig', [
+            'client' => $client
+        ]);
+    }
+
     /**
      * @Route("/register", name="app_register")
      */
-    public function index(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $em): Response
+    public function register(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $em): Response
     {
         $client = new Client();
         $form = $this->createForm(RegisterFormType::class, $client);

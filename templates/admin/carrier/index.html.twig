@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste Transporteur{% endblock %}
+
+{% block body %}
+<section class="carrier">
+    <div class="container">
+    <h1 class="mb-4">Liste Transporteur</h1>
+    <a href="{{ path('app_carrier_new') }}" class="btn btn-primary px-4 mb-4">Nouveau Transporteur</a>
+
+        <div class="carrier-table">
+            <table class="table table-striped" id="table-carrier" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Description</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for carrier in carriers %}
+                    <tr>
+                        <td>{{ carrier.id }}</td>
+                        <td>{{ carrier.name }}</td>
+                        <td>{{ carrier.price }} €</td>
+                        <td>{{ carrier.description|slice(0,30)}} ...</td>
+                        <td>
+                            <a href="{{ path('app_carrier_show', {'id': carrier.id}) }}" class="btn btn-secondary">Voir</a>
+                            <a href="{{ path('app_carrier_edit', {'id': carrier.id}) }}" class="btn btn-secondary">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

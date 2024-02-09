@@ -1,0 +1,39 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Transporteur{% endblock %}
+
+{% block body %}
+<section class="carrier-show">
+    <div class="container">
+        <h1>Transporteur</h1>
+
+        <table class="table mb-4">
+            <tbody>
+                <tr>
+                    <th>Identitfication</th>
+                    <td>{{ carrier.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ carrier.name }}</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>{{ carrier.price }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ carrier.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <a href="{{ path('app_carrier_edit', {'id': carrier.id}) }}" class="btn btn-warning px-4 btn-register">Modifier</a>
+
+        <a href="{{ path('app_carrier_index') }}" class="btn btn-secondary px-4">Retour à la liste</a>
+    
+        {{ include('admin/carrier/_delete_form.html.twig') }}
+    </div>
+</section>
+    
+{% endblock %}

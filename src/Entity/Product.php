@@ -80,6 +80,11 @@ class Product
      */
     private $isActive;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOutOfStock;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
@@ -240,6 +245,18 @@ class Product
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function isIsOutOfStock(): ?bool
+    {
+        return $this->isOutOfStock;
+    }
+
+    public function setIsOutOfStock(bool $isOutOfStock): self
+    {
+        $this->isOutOfStock = $isOutOfStock;
 
         return $this;
     }
