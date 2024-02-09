@@ -48,6 +48,7 @@ class ProductController extends AbstractController
             //$productRepository->add($product, true);
             $date = new \Datetime();
             $product->setIsActive(1)
+                    ->setCreatedAt($date)
                     ->setIsOutOfStock(0);
 
             $em->persist($product);

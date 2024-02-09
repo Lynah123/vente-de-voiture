@@ -85,6 +85,11 @@ class Product
      */
     private $isOutOfStock;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
@@ -257,6 +262,18 @@ class Product
     public function setIsOutOfStock(bool $isOutOfStock): self
     {
         $this->isOutOfStock = $isOutOfStock;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

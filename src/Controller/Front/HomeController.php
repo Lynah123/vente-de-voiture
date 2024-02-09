@@ -14,9 +14,13 @@ class HomeController extends AbstractController
      */
     public function index(ProductRepository $productRepo): Response
     {
-        $product = $productRepo->findBy(['isActive' => true, 'isOutOfStock' => false]);
+        $products = $productRepo->findBy(
+            ['isActive' => true, 'isOutOfStock' => false], // Critères de recherche
+            ['createdAt' => 'DESC'], // Tri par date de création décroissante
+            6 // Limite de résultats à 6 produits
+        );
         return $this->render('front/home/index.html.twig', [
-            'products' => $product,
+            'products' => $products,
         ]);
     }
 }
