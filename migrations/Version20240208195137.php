@@ -20,12 +20,12 @@ final class Version20240208195137 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product ADD is_active TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE productDetailsADD is_active TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product DROP is_active');
+        $this->addSql('ALTER TABLE productDetailsDROP is_active');
     }
 }

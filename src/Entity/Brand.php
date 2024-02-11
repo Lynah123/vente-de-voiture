@@ -31,24 +31,29 @@ class Brand
 
     /**
      * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="brands")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $supplier;
 
-
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="brand")
+     * @ORM\OneToMany(targetEntity=ProductDetails::class, mappedBy="brand")
      */
-    private $products;
+    private $productDetails;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->productDetails = new ArrayCollection();
     }
 
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString() 
+    {
+        return $this->getTitle();
     }
 
     public function getTitle(): ?string
@@ -76,33 +81,33 @@ class Brand
     }
 
     /**
-     * @return Collection<int, Product>
+     * @return Collection<int, ProductDetails>
      */
-    public function getProducts(): Collection
+    public function getProductDetails(): Collection
     {
-        return $this->products;
+        return $this->productDetails;
     }
 
-    public function addProduct(Product $product): self
+    public function addProductDetail(ProductDetails $productDetail): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setBrand($this);
+        if (!$this->productDetails->contains($productDetail)) {
+            $this->productDetails[] = $productDetail;
+            $productDetail->setBrand($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removeProductDetail(ProductDetails $productDetail): self
     {
-        if ($this->products->removeElement($product)) {
+        if ($this->productDetails->removeElement($productDetail)) {
             // set the owning side to null (unless already changed)
-            if ($product->getBrand() === $this) {
-                $product->setBrand(null);
+            if ($productDetail->getBrand() === $this) {
+                $productDetail->setBrand(null);
             }
         }
 
         return $this;
     }
 
-}
+   }

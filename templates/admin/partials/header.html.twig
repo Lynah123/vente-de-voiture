@@ -8,10 +8,10 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
           <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            test@gmail.com
+            {{app.user.email}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{path('app_logout')}}">Deconnecter</a>
+            <a class="dropdown-item text-white text-center" href="{{path('app_logout')}}">Deconnecter</a>
           </div>
         </li>
       </ul>

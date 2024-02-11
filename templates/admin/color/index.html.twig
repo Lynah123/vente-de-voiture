@@ -1,0 +1,45 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste de couleur{% endblock %}
+
+{% block body %}
+<section class="color">
+    <div class="container">
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">
+              {{message}}
+          </div>
+      {% endfor %}
+        <h1 class="mb-4">Liste des couleurs</h1>
+        <a href="{{ path('app_color_new') }}" class="btn btn-primary px-4 mb-4">Nouveau Couleur</a>
+
+        <table class="table table-striped" id="color-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Couleurs</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for color in colors %}
+                <tr>
+                    <td>{{ color.id }}</td>
+                    <td>{{ color.color }}</td>
+                    <td>
+                        <a href="{{ path('app_color_show', {'id': color.id}) }}" class="btn btn-secondary">Voir</a>
+                        <a href="{{ path('app_color_edit', {'id': color.id}) }}" class="btn btn-secondary">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+    
+
+{% endblock %}

@@ -2,19 +2,15 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Type;
-use App\Entity\Brand;
 use App\Entity\Stock;
 use App\Entity\Product;
-use App\Entity\Category;
 use App\Form\ProductType;
-use App\Form\UpdateProductFormType;
+use App\Form\ProductEditType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -36,47 +32,46 @@ class ProductController extends AbstractController
      * @Route("/new", name="app_product_new", methods={"GET", "POST"})
      */
     public function new(Request $request, ProductRepository $productRepository, EntityManagerInterface $em): Response
-    {
-        $product = new Product();
+{
+    $product = new Product();
+    $form = $this->createForm(ProductType::class, $product);
+    $form->handleRequest($request);
 
-        $stock = new Stock();
+    if ($form->isSubmitted() && $form->isValid()) {
+        $date = new \DateTime();
+        $product->setCreatedAt($date);
+        $em->persist($product);
 
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
+        foreach ($product->getProductDetails() as $productDetails) {
+            // Set the product association and other values
+            $productDetails->setProduct($product)
+                           ->setIsActive(true)
+                           ->setIsOutOfStock(false)
+                           ->setCreatedAt($date);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            //$productRepository->add($product, true);
-            $date = new \Datetime();
-            $product->setIsActive(1)
-                    ->setCreatedAt($date)
-                    ->setIsOutOfStock(0);
+            // Persist the ProductDetails entity
+            $em->persist($productDetails);
 
-            $em->persist($product);
-            $em->flush();
+            // Create and persist the associated Stock entity
+            $stock = new Stock();
+            $stock->setProductDetails($productDetails)
+                  ->setQuantity($productDetails->getQuantity())
+                  ->setCreatedAt($productDetails->getCreatedAt());
 
-            $stock->setProduct($product)
-                  ->setQuantity($product->getQuantity())
-                  ->setCreatedAt($date)
-                  ;
-                  
             $em->persist($stock);
-            $em->flush();
-
-            $message = "Votre produit a bien été enegistré, merci pour votre confiance";
-
-            $this->addFlash(
-                'success',
-                $message
-            );
-
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
+        // Flush changes after persisting all entities
+        $em->flush();
+
+        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->renderForm('admin/product/new.html.twig', [
+        'product' => $product,
+        'form' => $form,
+    ]);
+}
 
 
     /**
@@ -94,23 +89,16 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
-        $form = $this->createForm(UpdateProductFormType::class, $product);
+        $form = $this->createForm(ProductEditType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productRepository->add($product, true);
 
-            $message = "Votre produit a bien été modifié, merci pour votre confiance";
-
-            $this->addFlash(
-                'success',
-                $message
-            );
-
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/product/new.html.twig', [
+        return $this->renderForm('admin/product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
         ]);
@@ -125,44 +113,6 @@ class ProductController extends AbstractController
             $productRepository->remove($product, true);
         }
 
-        $message = "Votre produit a bien été supprimé, merci pour votre confiance";
-
-            $this->addFlash(
-                'success',
-                $message
-            );
-
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    /**
-     * @Route("/update-is-active/{id}", name= "update_is_active")
-     * 
-     */
-    public function updateIsActive(Request $request, Product $product, EntityManagerInterface $em): Response
-    {
-        $productId = $product->getId();
-        
-        if (!$productId) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$productId
-            );
-        }
-
-        $isActive = $product->isIsActive();
-
-        if($isActive == 0) {
-            $product->setIsActive(1);
-            $em->persist($product);
-            $em->flush();
-        } else {
-            $product->setIsActive(0);
-            $em->persist($product);
-            $em->flush();
-        }
-        
-        return $this->redirectToRoute('app_product_index');
-    }
-
-   
 }

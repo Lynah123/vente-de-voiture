@@ -12,7 +12,7 @@ class StockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $product = $options['product'];
+        $productDetails= $options['product'];
 
         $builder
             ->add('quantity', IntegerType::class, [

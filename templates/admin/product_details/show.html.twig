@@ -1,0 +1,68 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Detail produit{% endblock %}
+
+{% block body %}
+<section class="detail-product-show">
+    <div class="container">
+        <h1>Detail Produit</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ productDetail.id }}</td>
+                </tr>
+                <tr>
+                    <th>Produit</th>
+                    <td>{{ productDetail.product.title }}</td>
+                </tr>
+                <tr>
+                    <th>Marque</th>
+                    <td> {{productDetail.brand.title}} </td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td> {{productDetail.type.title}} </td>
+                </tr>
+                <tr>
+                    <th>Genre</th>
+                    <td> {{productDetail.category.title}} </td>
+                </tr>
+                <tr>
+                    <th>Couleurs</th>
+                    <td>
+                        {% for color in productDetail.colors %}
+                            {{color.color}},
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Quantité</th>
+                    <td> {{productDetail.quantity}} </td>
+                </tr>
+                <tr>
+                    <th>Prix</th>
+                    <td> {{productDetail.price}} € </td>
+                </tr>
+                <tr>
+                    <th>Date de création</th>
+                    <td> {{productDetail.createdAt|date('d-m-Y à H:s')}} </td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td> {{productDetail.description}} </td>
+                </tr>
+               
+            </tbody>
+        </table>
+        <a href="{{ path('app_product_edit', {'id': productDetail.product.id}) }}" class="btn-register btn btn-warning">Modifier</a>
+        <a href="{{ path('app_product_details', {'id' : productDetail.id}) }}" class="btn btn-secondary">Retour à la liste</a>
+
+        {{ include('admin/product_details/_delete_form.html.twig') }}
+
+    </div>
+
+</section>
+    
+{% endblock %}

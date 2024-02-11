@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block tite %} Details produit {% endblock %}
+
+{% block body %}
+<section class="detail">
+    <div class="container">
+        <h1 class="text-center mb-4 fw-bold">Détails de produits</h1>
+        <p class="text-center mb-5">C'est ici que vous voyez tous les détails de chaque produit</p>
+        <div class="row">
+            {% for productDetail in productsDetails %}
+            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                <div class="card shadow product-card">
+                    <div class="product-img">
+                        <img src="{{asset('uploads/products/' ~ productDetail.image )}}" alt="" class="img-fluid">
+                    </div>
+                    <div class="description">
+                        <h4 class="text-center"> {{productDetail.product.title}} </h4>
+                        <p class="text-center"><span>Marque : </span> {{productDetail.brand.title}} </p>
+                        <p class="text-center"><span>Type : </span> {{productDetail.type.title}} </p>
+                        <p class="text-center"><span>Genre</span> {{productDetail.category.title}} </p>
+                        <p class="text-center"><span>Quantités : </span> {{productDetail.quantity}} </p>
+                        <p class="text-center"><span>Prix unité : </span> {{productDetail.price}} € </p>
+                        <p class="text-center"><span>Couleurs : </span> 
+                            {% for color in productDetail.colors %}
+                                {{color.color}} <br>
+                            {% endfor %}
+                        </p>
+                        <p class="p-4"> {{productDetail.description}} </p>
+                        <div class="d-flex justify-content-center mb-5">
+                            <a href="{{path('app_cart_add', {'id' : productDetail.id})}}" class="btn btn-primary px-4 btn-sm">Commander</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,18 +1,15 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}New Product{% endblock %}
+{% block title %}Nouveau Product{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }} {# pour inclure les styles de base.html.twig #}
-    {# Ajoutez des styles spécifiques pour cette page s'il y en a #}
-{% endblock %}
+{% form_theme form 'admin/product/_collection.html.twig' %}
 
 {% block body %}
-<section class="new-product">
+<section class="product-new">
     <div class="container">
-        <h1 class="mb-4">Création de nouveau Produit</h1>
+        <h1>Creation de nouveau Product</h1>
         {{ include('admin/product/_form.html.twig') }}
     </div>
 </section>
-
+    
 {% endblock %}

@@ -4,12 +4,16 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Type;
+use App\Entity\Admin;
 use App\Entity\Brand;
+use App\Entity\Color;
+use App\Entity\Stock;
 use App\Entity\Client;
 use App\Entity\Carrier;
 use App\Entity\Product;
 use App\Entity\Category;
 use App\Entity\Supplier;
+use App\Entity\ProductDetails;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -19,7 +23,7 @@ class AppFixtures extends Fixture
 {
     private $passwordEncoder;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordHasherInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
     }
@@ -27,6 +31,17 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr-FR');
+
+        //ADMIN
+        $admin = new Admin();
+        $password = $this->passwordEncoder->hashPassword($admin, 'admin123');
+        $admin->setFirstName('Administrateur')
+              ->setLastName('Administrateur')
+              ->setEmail('admin@example.com')
+              ->setPassword($password)
+              ->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($admin);
 
         //CLIENT
         for($i = 1; $i <= 30; $i++) {
@@ -36,7 +51,7 @@ class AppFixtures extends Fixture
             $email = $faker->email();
             $phone = $faker->phoneNumber();
             $adresse = $faker->address();
-            $password = $this->passwordEncoder->encodePassword($client, 'user123');
+            $password = $this->passwordEncoder->hashPassword($client, 'user123');
 
             $client->setFirstName($fisrtName)
                    ->setLastName($lastName)
@@ -126,33 +141,62 @@ class AppFixtures extends Fixture
             'car10.jpeg'
         ];
 
-        for($i = 1; $i <= 30; $i++) {
+
+        for ($i = 1; $i <= 10; $i++) {
             $product = new Product();
-            $title = $faker->words(3, true);
-            $description = $faker->paragraph($nbSentences = 3, $variableNbSentences = true);
-            $quantity = $faker->numberBetween($min = 0, $max = 10);
-            $price = $faker->randomFloat($nbMaxDecimals = 2, $min = 1000, $max = 10000);
-            $randomBrand = $faker->randomElement($brands);
-            $randomCategory = $faker->randomElement($categories);
-            $randomType = $faker->randomElement($types);
-            $image = $faker->randomElement($images);
-            $date = $faker->dateTime();
+            $title = $faker->words(2, true);
+            $date = new \DateTime();
+            $description = $faker->paragraph($nbSentences = 2, $variableNbSentences = true);
         
             $product->setTitle($title)
-                    ->setDescription($description)
-                    ->setQuantity($quantity)
-                    ->setPrice($price)
-                    ->setBrand($randomBrand)
-                    ->setCategory($randomCategory)
-                    ->setType($randomType)
-                    ->setIsActive(true)
-                    ->setIsOutOfStock(0)
-                    ->setImage($image)
-                    ->setCreatedAt($date);
+                    ->setCreatedAt($date)
+                    ->setDescription($description);
+        
             $manager->persist($product);
+        
+            for ($j = 1; $j <= 3; $j++) {
+                $productDetails = new ProductDetails();
+                $description = $faker->paragraph($nbSentences = 3, $variableNbSentences = true);
+                $quantity = $faker->numberBetween($min = 1, $max = 10);
+                $price = $faker->randomFloat($nbMaxDecimals = 2, $min = 1000, $max = 10000);
+                $randomBrand = $faker->randomElement($brands);
+                $randomCategory = $faker->randomElement($categories);
+                $randomType = $faker->randomElement($types);
+                $image = $faker->randomElement($images);
+                $date = $faker->dateTime();
+        
+                $productDetails->setDescription($description)
+                        ->setQuantity($quantity)
+                        ->setPrice($price)
+                        ->setBrand($randomBrand)
+                        ->setCategory($randomCategory)
+                        ->setType($randomType)
+                        ->setIsActive(true)
+                        ->setIsOutOfStock(0)
+                        ->setImage($image)
+                        ->setCreatedAt($date);
+        
+                $manager->persist($productDetails);
+        
+                $stock = new Stock();
+                $stock->setProductDetails($productDetails)
+                    ->setQuantity($productDetails->getQuantity())
+                    ->setCreatedAt($productDetails->getCreatedAt());
+        
+                $manager->persist($stock);
+                $product->addProductDetail($productDetails);
+                $colorCount = mt_rand(1, 5);
+
+                for ($k = 1; $k <= $colorCount; $k++) {
+                    $color = new Color();
+                    $color->setColor($faker->hexColor);
+            
+                    $manager->persist($color);
+                    $color->addProductDetail($productDetails);
+                }
+            }
         }
         
-
         $manager->flush();
     }
 }

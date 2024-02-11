@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification couleur{% endblock %}
+
+{% block body %}
+<section class="color-edit">
+    <div class="container">
+        <h1>Modification couleur</h1>
+        {{ include('admin/color/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+</section>
+{% endblock %}

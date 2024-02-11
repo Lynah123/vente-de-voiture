@@ -20,12 +20,12 @@ final class Version20240209094027 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product ADD is_out_of_stock TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE productDetailsADD is_out_of_stock TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product DROP is_out_of_stock');
+        $this->addSql('ALTER TABLE productDetailsDROP is_out_of_stock');
     }
 }

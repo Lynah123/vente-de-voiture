@@ -1,56 +1,33 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Produit{% endblock %}
+{% block title %}Product{% endblock %}
 
 {% block body %}
 <section class="product-show">
     <div class="container">
-        <h1>Produit</h1>
+        <h1>Product</h1>
 
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Identification</th>
-                    <td>{{ product.id }}</td>
-                </tr>
-                <tr>
-                    <th>Titre</th>
-                    <td>{{ product.title }}</td>
-                </tr>
-                <tr>
-                    <th>Marque</th>
-                    <td>{{ product.brand.title }}</td>
-                </tr>
-                <tr>
-                    <th>Genre</th>
-                    <td>{{ product.category.title }}</td>
-                </tr>
-                <tr>
-                    <th>Type</th>
-                    <td>{{ product.type.title }}</td>
-                </tr>
-                <tr>
-                    <th>Quantité(s)</th>
-                    <td>{{ product.quantity }}</td>
-                </tr>
-                
-                <tr>
-                    <th>Prix</th>
-                    <td>{{ product.price }} €</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>{{ product.description }}</td>
-                </tr>
-                
-            </tbody>
-        </table>
-        <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-warning btn-register px-4">Modifier</a>
-    
-        <a href="{{ path('app_product_index') }}" class="btn btn-secondary px-4">Retour à la liste</a>
-    
-    
-        {{ include('admin/product/_delete_form.html.twig') }}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ product.title }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-primary px-4 btn-register">Modifier</a>
+
+    <a href="{{ path('app_product_index') }}" class="btn btn-secondary">Retour à la liste</a>
+
+    {{ include('admin/product/_delete_form.html.twig') }}
     </div>
 </section>
     

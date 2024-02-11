@@ -24,11 +24,6 @@ class OrderDetails
     private $myOrder;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $product;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $quantity;
@@ -58,6 +53,16 @@ class OrderDetails
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $color;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,18 +76,6 @@ class OrderDetails
     public function setMyOrder(?Order $myOrder): self
     {
         $this->myOrder = $myOrder;
-
-        return $this;
-    }
-
-    public function getProduct(): ?string
-    {
-        return $this->product;
-    }
-
-    public function setProduct(string $product): self
-    {
-        $this->product = $product;
 
         return $this;
     }
@@ -155,6 +148,30 @@ class OrderDetails
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getProduct(): ?string
+    {
+        return $this->product;
+    }
+
+    public function setProduct(string $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

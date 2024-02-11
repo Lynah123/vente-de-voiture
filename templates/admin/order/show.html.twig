@@ -36,8 +36,9 @@
                         {% for orderDetail in order.orderDetails %}
                             <span class="fw-bold">Titre : </span> {{orderDetail.product}} <span class="fw-bold" style="margin-left: 20px;">Marque : </span> {{orderDetail.brand}}
                             <span class="fw-bold" style="margin-left: 20px;">Genre : </span> {{orderDetail.category}} <span class="fw-bold" style="margin-left: 20px;">Type : </span> {{orderDetail.type}}
-                            <span class="fw-bold" style="margin-left: 20px;">Quantité(s) : </span> {{orderDetail.quantity}} <span class="fw-bold" style="margin-left: 20px;">Prix : </span> {{orderDetail.price}} €
-                            <span class="fw-bold" style="margin-left: 20px;">Total : </span> {{orderDetail.total}} € <br/>
+                            <span class="fw-bold">Couleur : </span> {{orderDetail.color}}<span class="fw-bold" style="margin-left: 20px;">Quantité(s) : </span> {{orderDetail.quantity}} <span class="fw-bold" style="margin-left: 20px;">Prix : </span> {{orderDetail.price}} €
+                            <span class="fw-bold" style="margin-left: 20px;">Total : </span> {{orderDetail.total}} € 
+                             <br/>
                         {% endfor %}
                     </td>
                 </tr>

@@ -5,9 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\Stock;
 use App\Entity\Product;
 use App\Form\StockType;
+use App\Entity\ProductDetails;
 use App\Repository\StockRepository;
-use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ProductDetailsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,22 +20,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StockController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="app_stock_index", methods={"GET"})
+     * @Route("/{id}/stock", name="app_stock_index", methods={"GET"})
      */
-    public function index($id, StockRepository $stockRepository, ProductRepository $productRepo): Response
+    public function index($id, StockRepository $stockRepository, ProductDetailsRepository $productRepo): Response
     {
-        $product = $productRepo->findOneById($id);
+        $productDetails= $productRepo->findOneById($id);
 
         return $this->render('admin/stock/index.html.twig', [
             'stocks' => $stockRepository->findByProduct($id),
-            'product' => $product
+            'productDetails' => $productDetails
         ]);
     }
 
     /**
      * @Route("/new/{id}", name="app_stock_new", methods={"GET", "POST"})
      */
-    public function new($id, Request $request, StockRepository $stockRepository, Product $product, EntityManagerInterface $em): Response
+    public function new($id, Request $request, StockRepository $stockRepository, ProductDetails $product, EntityManagerInterface $em): Response
     {
         $stock = new Stock();
         $form = $this->createForm(StockType::class, $stock, [

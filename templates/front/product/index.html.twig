@@ -10,21 +10,11 @@
                 {% for product in products %}
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-3">
                     <div class="card product-card shadow">
-                        <div class="product-img">
-                            <img src="{{ asset('uploads/products/' ~ product.image) }}" alt="" class="img-fluid">
-                        </div>
                         <div class="product-description p-4">
                             <h4 class="text-center fw-bold mb-3"> {{product.title}} </h4>
-                            <p class="text-center">Marque : {{product.brand.title}} </p>
-                            <p class="text-center">Genre : {{product.category.title}} </p>
-                            <p class="text-center">Type : {{product.type.title}} </p>
-                            <p class="text-center">Nombre(s) : {{product.quantity}} </p>
-                            <p class="text-center">Prix(unité) : {{product.price}} € </p>
-                            <p class="description"> {{product.description}} </p>
-                            <div class="icons">
-                                <a href="{{path('app_cart_add', {'id' : product.id})}}">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </a>
+                            <p class="text-center mb-4 mt-4"> {{product.description}} </p>
+                            <div class="d-flex justify-content-center btn-product">
+                               <a href="{{path('app_product_details_front', {'id' : product.id})}}" class="btn btn-sm btn-primary px-4">Afficher les détails</a>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,30 @@
+{% block _add_color_product_colors_widget %}
+
+    {{ form_widget(form) }}
+
+    <input type="hidden" id="widgets-counter-color" value="0">
+
+    <div class="form-group">
+        <button class="btn btn-primary mt-3 mb-4 btn-collection px-4" id="add-product-color" type="button"> Ajouter des couleurs de produit </button>
+    </div>
+    
+{% endblock %}
+
+{% block _add_color_product_colors_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _add_color_product_colors_entry_widget %}
+    <div class="form-group mt-3" id="block_{{id}}">
+        <div class="row">
+            <div class="col-lg-10">
+                {{form_widget(form.color)}}
+            </div>
+            <div class="col-lg-2">
+                <button class="btn btn-danger" type="button" data-action="delete-color" data-target="#block_{{id}}">X</button>
+            </div>
+        </div>
+    </div>
+        
+{% endblock %}
+

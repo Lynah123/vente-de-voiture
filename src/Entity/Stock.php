@@ -28,9 +28,9 @@ class Stock
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="stocks")
+     * @ORM\ManyToOne(targetEntity=ProductDetails::class, inversedBy="stocks")
      */
-    private $product;
+    private $productDetails;
 
 
     public function getId(): ?int
@@ -62,14 +62,14 @@ class Stock
         return $this;
     }
 
-    public function getProduct(): ?Product
+    public function getProductDetails(): ?ProductDetails
     {
-        return $this->product;
+        return $this->productDetails;
     }
 
-    public function setProduct(?Product $product): self
+    public function setProductDetails(?ProductDetails $productDetails): self
     {
-        $this->product = $product;
+        $this->productDetails = $productDetails;
 
         return $this;
     }
