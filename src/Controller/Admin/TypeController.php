@@ -65,7 +65,7 @@ class TypeController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="app_type_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="app_type_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Type $type, TypeRepository $typeRepository): Response
     {

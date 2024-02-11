@@ -25,19 +25,24 @@ class Type
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="type")
+     * @ORM\OneToMany(targetEntity=ProductDetails::class, mappedBy="type")
      */
-    private $products;
+    private $productDetails;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->productDetails = new ArrayCollection();
     }
 
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString() 
+    {
+        return $this->getTitle();
     }
 
     public function getTitle(): ?string
@@ -53,29 +58,29 @@ class Type
     }
 
     /**
-     * @return Collection<int, Product>
+     * @return Collection<int, ProductDetails>
      */
-    public function getProducts(): Collection
+    public function getProductDetails(): Collection
     {
-        return $this->products;
+        return $this->productDetails;
     }
 
-    public function addProduct(Product $product): self
+    public function addProductDetail(ProductDetails $productDetail): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setType($this);
+        if (!$this->productDetails->contains($productDetail)) {
+            $this->productDetails[] = $productDetail;
+            $productDetail->setType($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removeProductDetail(ProductDetails $productDetail): self
     {
-        if ($this->products->removeElement($product)) {
+        if ($this->productDetails->removeElement($productDetail)) {
             // set the owning side to null (unless already changed)
-            if ($product->getType() === $this) {
-                $product->setType(null);
+            if ($productDetail->getType() === $this) {
+                $productDetail->setType(null);
             }
         }
 

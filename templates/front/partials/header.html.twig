@@ -19,20 +19,22 @@
         <li class="nav-item">
           <a class="nav-link text-white" href="{{path('app_cart')}}">Mon Panier</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Utilisateur
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            {% if app.user %}
-                <a class="dropdown-item" href="{{path('app_account')}}">Mon compte</a>
-                <a class="dropdown-item" href="{{path('app_logout')}}">Deconnecter</a>
-            {% else %}
-            <a class="dropdown-item" href="{{path('app_register')}}">S'inscrire</a>
-            <a class="dropdown-item" href="{{path('app_login')}}">Se connecter</a>
-            {% endif %}
-          </div>
+        {% if app.user %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{path('app_account')}}">Mon compte <span style="margin-left: 10px;">|</span></a> 
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{path('app_logout')}}">Deconnecter</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{path('app_register')}}">S'inscrire <span style="margin-left: 10px;">|</span></a> 
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{path('app_login')}}">Se connecter</a>
+        </li>
+        {% endif %}
+        
       </ul>
     </div>
     </div>

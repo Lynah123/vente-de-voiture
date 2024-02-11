@@ -14898,7 +14898,7 @@ product-hunt:
   changes:
     - '4.5'
     - 5.0.0
-  label: Product Hunt
+  label: productDetailsHunt
   search:
     terms: []
   styles:

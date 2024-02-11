@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modification Fournisseur{% endblock %}
+{% form_theme form 'admin/product_details/_collection.html.twig' %}
+
+{% block body %}
+<section class="add_color">
+    <div class="container">
+        <h1>Ajouter couleur</h1>
+
+        <div class="add-form">
+            {{form_start(form)}}
+                {{form_row(form)}}
+                <button type="submit" class="btn btn-primary btn-register px-4">Enregistrer</button>
+            {{form_end(form)}}
+        </div>
+    </div>
+</section>
+   
+{% endblock %}

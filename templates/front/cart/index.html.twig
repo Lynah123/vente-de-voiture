@@ -13,11 +13,10 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12"></div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                    <div class="card shadow p-5">
-                        <h3 class="text-center fw-bold fs-3 mb-4">Panier vide</h3>
-                        <p>Votre panier est vide, veuillez cliquer sur le bouton ci-dessous pour ajouter un produit</p>
-                        <a href="{{path('app_home')}}" class="btn btn btn-sm btn-cart">Choisir un produit</a>
-                    </div>
+                        <p class="text-center">Votre panier est vide, veuillez cliquer sur le bouton ci-dessous pour ajouter un produit</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="{{path('app_home')}}" class="btn btn-primary btn-sm btn-cart">Choisir un produit</a>
+                        </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12"></div>
             </div>
@@ -41,6 +40,10 @@
                             <tr class="text-nowrap text-center">
                                 <th>Image</th>
                                 <th>Produits</th>
+                                <th>Marques</th>
+                                <th>Types</th>
+                                <th>Genre</th>
+                                <th>Couleur</th>
                                 <th>Quantité</th>
                                 <th>Prix</th>
                                 <th>Total</th>
@@ -52,25 +55,37 @@
                             <tr class="text-nowrap text-center">  
                                 <td>
                                     <img
-                                        src="{{ asset('uploads/products/' ~ element.product.image) }}"
+                                        src="{{ asset('uploads/products/' ~ element.productDetail.image) }}"
                                         alt=""
                                         style="height: 50px; width: 50px; border-radius: 100%;"
                                     >
                                 </td>
-                                <td> {{element.product.title}} </td>
-                                <td> {{element.quantity}} </td>
-                                <td> {{element.product.price}} € </td>
-                                <td> {{element.product.price * element.quantity}} € </td>
+                                <td> {{element.productDetail.product.title}} </td>
+                                <td> {{element.productDetail.brand.title}} </td>
+                                <td> {{element.productDetail.type.title}} </td>
+                                <td> {{element.productDetail.category.title}} </td>
                                 <td>
-                                    <a href=" {{path('app_cart_add', {'id' : element.product.id})}} " class="mx-2 text-primary">
+                                    {% for color in element.productDetail.colors %}
+                                       <label>
+                                            <input type="radio" name="selected_color_{{ element.productDetail.id }}" value="{{ color.id }}">
+                                            {{ color.color }}
+                                        </label><br>
+                                    {% endfor %}
+                                </td>
+                                <td> {{element.quantity}} </td>
+                                <td> {{element.productDetail.price}} € </td>
+                                <td> {{element.productDetail.price * element.quantity}} € </td>
+                               
+                                <td>
+                                    <a href=" {{path('app_cart_add', {'id' : element.productDetail.id})}} " class="mx-2 text-primary">
                                         <i class="fas fa-cart-plus"></i>
                                     </a>
 
-                                    <a href=" {{path('app_cart_remove', {'id' : element.product.id})}} " class="mx-2 text-warning">
+                                    <a href=" {{path('app_cart_remove', {'id' : element.productDetail.id})}} " class="mx-2 text-warning">
                                         <i class="fas fa-minus-circle"></i>
                                     </a>
 
-                                    <a href="{{path('app_cart_delete', {'id' : element.product.id})}} " class="mx-2 text-danger">
+                                    <a href="{{path('app_cart_delete', {'id' : element.productDetail.id})}} " class="mx-2 text-danger">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </td>
@@ -83,20 +98,21 @@
                     </tbody>
                     
                 </table>
+
                 <div class="row mt-4 mb-5">
                     <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12"></div>
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                         {% set total = 0 %}
                         {% set GrandTotal = 0 %}
                         {% for element in dataCart %}
-                            {% set total = element.product.price * element.quantity %}
+                            {% set total = element.productDetail.price * element.quantity %}
                             {% set GrandTotal = GrandTotal + total %}
                         {% endfor %}
 
                         <p style="display: flex; justify-content: end;"><span style="margin-right: 20px;" class="fw-bold">Nombre de produits : </span> {{dataCart|length}} </p>
                         <p style="display: flex; justify-content: end;"><span style="margin-right: 20px;" class="fw-bold">Total de mon panier : </span> {{GrandTotal}} € </p>     
-                            <a href="{{path('app_order')}}" class="btn btn-warning btn-cart btn-sm mx-2 px-4 text-center text-black" style="width: 100%;">Valider mes paniers</a>
-                            
+                        <a href="#" onclick="validateColorSelection('{{ path('app_order') }}')" class="btn btn-warning btn-cart btn-sm mx-2 px-4 text-center text-black" style="width: 100%;">Valider mes paniers</a>
+
                     </div>
                 </div>
                 </div>
@@ -105,5 +121,37 @@
         {% endif %}
     </div>
 </section>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+
+    function validateColorSelection(orderPath) {
+        var products = document.querySelectorAll('input[type="radio"][name^="selected_color_"]');
+        var isValid = true;
+        var selectedColors = {};
+        products.forEach(function (product) {
+            var selectedColor = document.querySelector('input[type="radio"][name="' + product.name + '"]:checked');
+
+            if (!selectedColor) {
+                isValid = false;
+            } else {
+                selectedColors[product.name] = selectedColor.value;
+            }
+        });
+
+        if (isValid) {
+            window.location.href = orderPath;
+        } else {
+            alert('Veuillez d\'abord choisir la couleur pour tous les produits dans votre panier.');
+        }
+
+    }
+
+
+    
+</script>
+
 
 {% endblock %}

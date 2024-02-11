@@ -25,20 +25,24 @@ class Category
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=ProductDetails::class, mappedBy="category")
      */
-    private $products;
+    private $productDetails;
 
     public function __construct()
     {
-        $this->brands = new ArrayCollection();
-        $this->products = new ArrayCollection();
+        $this->productDetails = new ArrayCollection();
     }
 
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString() 
+    {
+        return $this->getTitle();
     }
 
     public function getTitle(): ?string
@@ -53,31 +57,30 @@ class Category
         return $this;
     }
 
-   
     /**
-     * @return Collection<int, Product>
+     * @return Collection<int, ProductDetails>
      */
-    public function getProducts(): Collection
+    public function getProductDetails(): Collection
     {
-        return $this->products;
+        return $this->productDetails;
     }
 
-    public function addProduct(Product $product): self
+    public function addProductDetail(ProductDetails $productDetail): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setCategory($this);
+        if (!$this->productDetails->contains($productDetail)) {
+            $this->productDetails[] = $productDetail;
+            $productDetail->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removeProductDetail(ProductDetails $productDetail): self
     {
-        if ($this->products->removeElement($product)) {
+        if ($this->productDetails->removeElement($productDetail)) {
             // set the owning side to null (unless already changed)
-            if ($product->getCategory() === $this) {
-                $product->setCategory(null);
+            if ($productDetail->getCategory() === $this) {
+                $productDetail->setCategory(null);
             }
         }
 

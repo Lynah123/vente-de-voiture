@@ -8,6 +8,7 @@ use App\Entity\OrderDetails;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ProductDetailsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,8 +32,9 @@ class OrderController extends AbstractController
     /**
      * @Route("/commande", name="app_order")
      */
-    public function index(ProductRepository $productRepo, SessionInterface $session): Response
+    public function index(Request $request, ProductDetailsRepository $productRepo, SessionInterface $session): Response
     {
+        
         if(!$this->getUser()->getAdressesDelivery()->getValues()) {
             return $this->redirectToRoute('app_adresse_new');
         }
@@ -45,21 +47,20 @@ class OrderController extends AbstractController
 
         $dataCart = [];
 
-        foreach($cart as $id => $quantity) {
-            $product = $productRepo->find($id);
+        foreach ($cart as $id => $quantity) {
+            $productDetails = $productRepo->find($id);
 
             $dataCart[] = [
-                'product' => $product,
-                'quantity' => $quantity
+                'productDetail' => $productDetails,
+                'quantity' => $quantity,
             ];
-
         }
-
+        
         $form = $this->createForm(OrderType::class, null, [
             'client' => $this->getUser(),
 
         ]);
-        
+
         return $this->render('front/order/index.html.twig', [
             'form' => $form->createVIew(),
             'dataCart' => $dataCart,
@@ -69,26 +70,28 @@ class OrderController extends AbstractController
      /**
      * @Route("/commande/recapitulatif", name="app_order_recap")
      */
-    public function add(SessionInterface $session, Request $request, ProductRepository $productRepo, EntityManagerInterface $em): Response
+    public function add(SessionInterface $session, Request $request, ProductDetailsRepository $productRepo, EntityManagerInterface $em): Response
     {
+
         $cart = $session->get("cart", []);
 
-        if(!$cart) {
+        if (!$cart) {
             return $this->redirectToRoute('app_cart');
         }
-
+    
         $dataCart = [];
-
-        foreach($cart as $id => $quantity) {
-            $product = $productRepo->find($id);
-
+    
+        foreach ($cart as $id => $quantity) {
+            $productDetails = $productRepo->find($id);
+            
+        
             $dataCart[] = [
-                'product' => $product,
+                'productDetail' => $productDetails,
                 'quantity' => $quantity,
             ];
-
+            
         }
-
+    
         $form = $this->createForm(OrderType::class, null, [
             'client' => $this->getUser(),
         ]);
@@ -122,26 +125,29 @@ class OrderController extends AbstractController
 
             foreach($dataCart as $cartItem) {
                 $orderDetail = new OrderDetails();
+
                 $orderDetail->setMyOrder($order)
-                            ->setProduct($cartItem['product']->getTitle())
-                            ->setBrand($cartItem['product']->getBrand()->getTitle())
-                            ->setCategory($cartItem['product']->getCategory()->getTitle())
-                            ->setType($cartItem['product']->getType()->getTitle())
+                            ->setProduct($cartItem['productDetail']->getProduct()->getTitle())
+                            ->setBrand($cartItem['productDetail']->getBrand()->getTitle())
+                            ->setCategory($cartItem['productDetail']->getCategory()->getTitle())
+                            ->setType($cartItem['productDetail']->getType()->getTitle())
                             ->setQuantity($cartItem['quantity'])
-                            ->setPrice($cartItem['product']->getPrice())
-                            ->setTotal($cartItem['product']->getPrice() * $cartItem['quantity'])
+                            ->setPrice($cartItem['productDetail']->getPrice())
+                            //->setColor($cartItem['productDetail']->getColors()->getColor())
+                            ->setColor('bleu')
+                            ->setTotal($cartItem['productDetail']->getPrice() * $cartItem['quantity'])
                             ;
 
-                $quantityProduct_restant = $cartItem['product']->getQuantity() - $cartItem['quantity'];
+                $quantityProduct_restant = $cartItem['productDetail']->getQuantity() - $cartItem['quantity'];
 
-                $product->setQuantity($quantityProduct_restant);
+                $productDetails->setQuantity($quantityProduct_restant);
 
-                if($product->getQuantity() == 0) {
-                    $product->setIsOutOfStock(1);
+                if($productDetails->getQuantity() == 0) {
+                    $productDetails->setIsOutOfStock(1);
                 }
 
                 $em->persist($orderDetail);
-                $em->persist($product);
+                $em->persist($productDetails);
                 
             }
 
@@ -156,7 +162,9 @@ class OrderController extends AbstractController
                 $message
             );
 
-            return $this->redirectToRoute('app_my_order');
+            return $this->redirectToRoute('app_order_confirm', [
+                'id' => $order->getId(),
+            ]);
 
 
             return $this->render('front/order/add.html.twig', [
@@ -164,10 +172,21 @@ class OrderController extends AbstractController
                 'carrier' => $carriers,
                 'adresse' => $delivery_content,
                 'reference' => $order->getReference(),
+                'selectedColors' => $selectedColors,
             ]);
         }
 
         return $this->redirectToRoute('app_cart');
        
+    }
+
+     /**
+     * @Route("/commande/{id}/confirmation", name="app_order_confirm")
+     */
+    public function confirm(Order $order) {
+
+        return $this->render('front/order/confirm.html.twig', [
+            'order' => $order,
+        ]);
     }
 }

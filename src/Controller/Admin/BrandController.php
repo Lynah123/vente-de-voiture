@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Brand;
 use App\Form\BrandType;
 use App\Repository\BrandRepository;
+use App\Repository\SupplierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,11 @@ class BrandController extends AbstractController
     /**
      * @Route("/new", name="app_brand_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, BrandRepository $brandRepository, EntityManagerInterface $em): Response
+    public function new(
+            Request $request, 
+            BrandRepository $brandRepository, 
+            EntityManagerInterface $em
+        ): Response
     {
         $brand = new Brand();
         $form = $this->createForm(BrandType::class, $brand);

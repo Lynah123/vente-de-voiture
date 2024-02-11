@@ -44,6 +44,7 @@ class Supplier
         $this->brands = new ArrayCollection();
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,4 +115,6 @@ class Supplier
 
         return $this;
     }
+
+ 
 }

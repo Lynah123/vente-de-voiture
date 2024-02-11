@@ -2,8 +2,14 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Color;
 use App\Entity\Product;
-use App\Repository\ProductRepository;
+use App\Entity\FindColor;
+use App\Form\FindColorType;
+use App\Entity\ProductDetails;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ProductDetailsRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -11,38 +17,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
-    /**
-     * @Route("/cart", name="app_cart")
-     */
-    public function index(SessionInterface $session, ProductRepository $productRepo): Response
+   /**
+ * @Route("/cart", name="app_cart")
+ */
+    public function index(Request $request, SessionInterface $session, ProductDetailsRepository $productRepo): Response
     {
+
         $cart = $session->get("cart", []);
 
         // on "fabrique" les données
-
         $dataCart = [];
 
         foreach($cart as $id => $quantity) {
-            $product = $productRepo->find($id);
+            $productDetails= $productRepo->find($id);
 
             $dataCart[] = [
-                'product' => $product,
+                'productDetail' => $productDetails,
                 'quantity' => $quantity
             ];
-
         }
 
         return $this->render('front/cart/index.html.twig', [
-            'dataCart' => $dataCart
+            'dataCart' => $dataCart,
         ]);
     }
 
     /**
      * @Route("/cart/add/{id}", name="app_cart_add")
      */
-    public function add(Product $produit, SessionInterface $session)
+    public function add(Request $request, ProductDetails $produit, SessionInterface $session)
     {
-        //on récupère le panier actuel
 
         $cart = $session->get("cart", []);
 
@@ -73,10 +77,8 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/remove/{id}", name="app_cart_remove")
      */
-    public function remove(Product $produit, SessionInterface $session)
+    public function remove(Request $request, ProductDetails $produit, SessionInterface $session)
     {
-        //on récupère le panier actuel
-
         $cart = $session->get("cart", []);
 
         $id = $produit->getId();
@@ -104,9 +106,8 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/delete/{id}", name="app_cart_delete")
      */
-    public function delete(Product $produit, SessionInterface $session)
+    public function delete(Request $request, ProductDetails $produit, SessionInterface $session)
     {
-        //on récupère le panier actuel
 
         $cart = $session->get("cart", []);
 

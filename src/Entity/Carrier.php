@@ -38,7 +38,7 @@ class Carrier
     }
 
     public function __toString() {
-        return $this->getName().'[br]'.$this->getPrice().'[br]'.$this->getDescription();
+        return $this->getName().'[br]'.$this->getPrice().' €'.'[br]'.$this->getDescription();
     }
 
     public function getName(): ?string

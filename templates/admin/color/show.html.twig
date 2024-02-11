@@ -1,0 +1,28 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Color{% endblock %}
+
+{% block body %}
+<section class="color-show">
+    <div class="container">
+        <h1>Color</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ color.id }}</td>
+                </tr>
+                <tr>
+                    <th>Couleur</th>
+                    <td>{{ color.color }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="{{ path('app_color_edit', {'id': color.id}) }}" class="btn btn-warning px-4 btn-register">Modifier</a>
+        <a href="{{ path('app_color_index') }}" class="btn btn-secondary px-4">Retour à la liste</a>
+        {{ include('admin/color/_delete_form.html.twig') }}
+    </div>
+</section>
+   
+{% endblock %}

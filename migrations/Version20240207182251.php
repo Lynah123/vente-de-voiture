@@ -22,22 +22,22 @@ final class Version20240207182251 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE type (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE product ADD category_id INT DEFAULT NULL, ADD type_id INT DEFAULT NULL, DROP type, DROP category');
-        $this->addSql('ALTER TABLE product ADD CONSTRAINT FK_D34A04AD12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
-        $this->addSql('ALTER TABLE product ADD CONSTRAINT FK_D34A04ADC54C8C93 FOREIGN KEY (type_id) REFERENCES type (id)');
-        $this->addSql('CREATE INDEX IDX_D34A04AD12469DE2 ON product (category_id)');
-        $this->addSql('CREATE INDEX IDX_D34A04ADC54C8C93 ON product (type_id)');
+        $this->addSql('ALTER TABLE productDetailsADD category_id INT DEFAULT NULL, ADD type_id INT DEFAULT NULL, DROP type, DROP category');
+        $this->addSql('ALTER TABLE productDetailsADD CONSTRAINT FK_D34A04AD12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
+        $this->addSql('ALTER TABLE productDetailsADD CONSTRAINT FK_D34A04ADC54C8C93 FOREIGN KEY (type_id) REFERENCES type (id)');
+        $this->addSql('CREATE INDEX IDX_D34A04AD12469DE2 ON productDetails(category_id)');
+        $this->addSql('CREATE INDEX IDX_D34A04ADC54C8C93 ON productDetails(type_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE product DROP FOREIGN KEY FK_D34A04AD12469DE2');
-        $this->addSql('ALTER TABLE product DROP FOREIGN KEY FK_D34A04ADC54C8C93');
+        $this->addSql('ALTER TABLE productDetailsDROP FOREIGN KEY FK_D34A04AD12469DE2');
+        $this->addSql('ALTER TABLE productDetailsDROP FOREIGN KEY FK_D34A04ADC54C8C93');
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE type');
         $this->addSql('DROP INDEX IDX_D34A04AD12469DE2 ON product');
         $this->addSql('DROP INDEX IDX_D34A04ADC54C8C93 ON product');
-        $this->addSql('ALTER TABLE product ADD type VARCHAR(255) NOT NULL, ADD category VARCHAR(255) NOT NULL, DROP category_id, DROP type_id');
+        $this->addSql('ALTER TABLE productDetailsADD type VARCHAR(255) NOT NULL, ADD category VARCHAR(255) NOT NULL, DROP category_id, DROP type_id');
     }
 }

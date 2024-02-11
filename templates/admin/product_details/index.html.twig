@@ -1,0 +1,59 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Detail de Produit!{% endblock %}
+
+{% block body %}
+<section class="product-detail">
+    <div class="container">
+        <h1>Liste des details de produit</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr class="text-nowrap text-center">
+                    <th>Id</th>
+                    <th>Marque</th>
+                    <th>Type</th>
+                    <th>Genre</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Couleur</th>
+                    <th>Date de création</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for productDetail in productDetails %}
+
+                <tr class="text-nowrap text-center">
+                        <td> {{productDetail.id}} </td>
+                        <td> {{productDetail.brand}} </td>
+                        <td> {{productDetail.type}} </td>
+                        <td> {{productDetail.category}} </td>
+                        <td> {{productDetail.quantity}} </td>
+                        <td> {{productDetail.price}} € </td>
+                        <td> 
+                            {% if productDetail.colors is defined and productDetail.colors is not empty %}
+                                {% for color in productDetail.colors %}
+                                    {{ color.color }} <br/>
+                                {% endfor %}
+                            {% else %}
+                                <a href="{{ path('app_product_add_color', {'id': productDetail.id}) }}">Ajouter couleur</a>
+                            {% endif %}
+                        </td>
+                        <td> {{productDetail.createdAt|date('d-m-Y à H:s')}} </td>
+                        <td> {{productDetail.description|slice(0,30)}} </td>
+                        <td>
+                            <a href="{{path('app_detail_product_show', {'id' : productDetail.id})}}" class="btn btn-secondary px-4">Voir</a>
+                            <a href="" class="btn btn-secondary px-4">Modifier</a>
+                        </td>
+                    {% else %}
+                <tr>
+                    <td colspan="9">Aucun enregistrement trouvé</td>
+                </tr>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

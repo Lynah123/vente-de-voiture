@@ -54,7 +54,7 @@ class CarrierController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_carrier_show", methods={"GET"})
+     * @Route("/{id}/show", name="app_carrier_show", methods={"GET"})
      */
     public function show(Carrier $carrier): Response
     {
@@ -91,7 +91,7 @@ class CarrierController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_carrier_delete", methods={"POST"})
+     * @Route("/{id}/delete", name="app_carrier_delete", methods={"POST"})
      */
     public function delete(Request $request, Carrier $carrier, CarrierRepository $carrierRepository): Response
     {

@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Confirmation commande {% endblock %}
+
+{% block body %}
+<section class="order-confirm">
+    <div class="container">
+        <h1 class="fw-bold text-center mb-4">Confirmation de ma commande</h1>
+        <p class="text-center mb-5">C'est ici que vous voyez tous les informations qui contient de votre commande avant de la payer</p>
+        <div class="order confirm content">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                    <div class="adresse-delivery">
+                        <h5 class="fw-bold">Votre adresse de livraison</h5>
+                        <p> {{order.delivery|raw}} </p>
+                    </div>
+                    <div class="transporteur">
+                        <h5 class="fw-bold">Transporteur</h5>
+                        <p> {{order.carrierName}} </p>
+                        <p> {{order.carrierPrice}} € </p>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
+                    <div class="order-confirm-product">
+                        <table class="table table-recap table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Produits</th>
+                                    <th>Marques</th>
+                                    <th>Types</th>
+                                    <th>Genres</th>
+                                    <th>Color</th>
+                                    <th>Quantités</th>
+                                    <th>Prix Unité</th>
+                                    <th>Prix de livraison</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set total = 0 %}
+                            {% for element in order.orderDetails %}
+                                <tr class="text-center">
+                                    <td> ({{element.product}}) </td>
+                                    <td> ({{element.brand}}) </td>
+                                    <td> ({{element.type}}) </td>
+                                    <td> ({{element.category}}) </td>
+                                    <td> ({{element.color}}) </td>
+                                    <td> {{element.quantity}} </td>
+                                    <td> {{element.price}} € </td>
+                                    <td> {{order.carrierPrice}} € </td>
+                                    <td> 
+                                        {{(element.price * element.quantity) + order.carrierPrice}} € 
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="total-paye" style="width: 30%; float: right;">
+                            {% set total = 0 %}
+                            {% for element in order.orderDetails %}
+                                {% set total = total + ((element.price * element.quantity) + order.carrierPrice) %}
+                            {% endfor %}
+                            <p class="bg-danger text-white py-1 px-2 text-center">Total à payer {{total}} €</p>
+                        </div>
+                        <div class="confirm-btn mt-5">
+                            <a href="#" class="btn btn-warning px-4 btn-register">Payer</a>
+                            <a href="{{path('app_my_order')}}" class="btn btn-secondary px-4">Voir ma liste de commande</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
